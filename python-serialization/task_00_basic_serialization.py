@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
-"""Module that defines append_write function."""
+"""Module that defines serialization functions."""
+import json
 
 
-def append_write(filename="", text=""):
-    """Append a string to a file and return number of characters added."""
-    with open(filename, "a", encoding="utf-8") as f:
-        return f.write(text)
+def serialize_and_save_to_file(data, filename):
+    """Serialize a dictionary to a JSON file."""
+    with open(filename, "w", encoding="utf-8") as f:
+        json.dump(data, f)
+
+
+def load_and_deserialize(filename):
+    """Load and deserialize a JSON file to a dictionary."""
+    with open(filename, encoding="utf-8") as f:
+        return json.load(f)
