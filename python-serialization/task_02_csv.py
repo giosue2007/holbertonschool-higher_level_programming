@@ -1,36 +1,17 @@
 #!/usr/bin/env python3
-"""Module that defines CustomObject class."""
-import pickle
+"""Module that defines convert_csv_to_json function."""
+import csv
+import json
 
 
-class CustomObject:
-    """Class that defines a custom object."""
-
-    def __init__(self, name, age, is_student):
-        """Initialize CustomObject with name, age and is_student."""
-        self.name = name
-        self.age = age
-        self.is_student = is_student
-
-    def display(self):
-        """Display object attributes."""
-        print("Name: {}".format(self.name))
-        print("Age: {}".format(self.age))
-        print("Is Student: {}".format(self.is_student))
-
-    def serialize(self, filename):
-        """Serialize object to a file."""
-        try:
-            with open(filename, "wb") as f:
-                pickle.dump(self, f)
-        except Exception:
-            return None
-
-    @classmethod
-    def deserialize(cls, filename):
-        """Deserialize object from a file."""
-        try:
-            with open(filename, "rb") as f:
-                return pickle.load(f)
-        except Exception:
-            return None
+def convert_csv_to_json(csv_filename):
+    """Convert a CSV file to JSON format."""
+    try:
+        with open(csv_filename, encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            data = list(reader)
+        with open("data.json", "w", encoding="utf-8") as f:
+            json.dump(data, f)
+        return True
+    except FileNotFoundError:
+        return False
