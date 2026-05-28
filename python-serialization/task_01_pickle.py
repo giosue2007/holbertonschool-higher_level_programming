@@ -1,25 +1,25 @@
 #!/usr/bin/env python3
-"""Module for serializing and deserializing custom Python objects."""
+"""Module that defines CustomObject class."""
 import pickle
 
 
 class CustomObject:
-    """A custom class with serialize and deserialize methods."""
+    """Class that defines a custom object."""
 
-    def __init__(self, name: str, age: int, is_student: bool):
-        """Initializes attributes."""
+    def __init__(self, name, age, is_student):
+        """Initialize CustomObject."""
         self.name = name
         self.age = age
         self.is_student = is_student
 
     def display(self):
-        """Prints the object's attributes."""
-        print(f"Name: {self.name}")
-        print(f"Age: {self.age}")
-        print(f"Is Student: {self.is_student}")
+        """Display object attributes."""
+        print("Name: {}".format(self.name))
+        print("Age: {}".format(self.age))
+        print("Is Student: {}".format(self.is_student))
 
-    def serialize(self, filename: str):
-        """Saves the object to a binary file."""
+    def serialize(self, filename):
+        """Serialize object to a file."""
         try:
             with open(filename, "wb") as f:
                 pickle.dump(self, f)
@@ -27,8 +27,8 @@ class CustomObject:
             return None
 
     @classmethod
-    def deserialize(cls, filename: str):
-        """Loads the object from a binary file."""
+    def deserialize(cls, filename):
+        """Deserialize object from a file."""
         try:
             with open(filename, "rb") as f:
                 return pickle.load(f)
