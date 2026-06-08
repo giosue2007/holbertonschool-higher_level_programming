@@ -7,8 +7,8 @@ if __name__ == "__main__":
         host="localhost",
         port=3306,
         user=MY_USER,
-        passwd=MY_PASS
-        db=MY_DB
+        passwd=MY_PASS,
+        db=MY_DB,
     )
     cursor = db.cursor()
     cursor.execute(
