@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """
-Lists all cities of a state given as argument from the database hbtn_0e_4_usa
+This module provides a script that takes in the name of a state
+as an argument and lists all cities of that state, using the
+database hbtn_0e_4_usa.
 """
 import sys
 import MySQLdb
