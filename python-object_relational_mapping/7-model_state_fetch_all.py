@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-This module fetches and lists all State objects
-from the database hbtn_0e_6_usa using SQLAlchemy.
+This module lists all State objects from the database hbtn_0e_6_usa
+using SQLAlchemy.
 """
 import sys
 from model_state import Base, State
@@ -10,7 +10,7 @@ from sqlalchemy.orm import sessionmaker
 
 
 if __name__ == "__main__":
-    # 1. Création du moteur de connexion SQLAlchemy
+    # Configuration du moteur de connexion à MySQL
     engine = create_engine(
         'mysql+mysqldb://{}:{}@localhost/{}'.format(
             sys.argv[1], sys.argv[2], sys.argv[3]
@@ -18,16 +18,16 @@ if __name__ == "__main__":
         pool_pre_ping=True
     )
 
-    # 2. Configuration et ouverture de la session ORM
+    # Création de la session pour interagir avec la base de données
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    # 3. Requête ORM pour récupérer et trier tous les États
+    # Récupération de tous les États, triés par ID de manière croissante
     states = session.query(State).order_by(State.id).all()
 
-    # 4. Affichage des résultats
+    # Affichage strict au format "id: name" demandé par le sujet
     for state in states:
         print("{}: {}".format(state.id, state.name))
 
-    # 5. Fermeture de la session
+    # Fermeture propre de la session
     session.close()
