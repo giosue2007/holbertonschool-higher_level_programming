@@ -1,13 +1,24 @@
 #!/usr/bin/python3
-"""Module that defines the City class mapped to the cities table."""
-from sqlalchemy import Column, Integer, String, ForeignKey
-from model_state import Base
+"""Prints all City objects from the database."""
+import sys
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
+from model_state import Base, State
+from model_city import City
 
 
-class City(Base):
-    """Class that represents a city in the database."""
-
-    __tablename__ = 'cities'
-    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    name = Column(String(128), nullable=False)
-    state_id = Column(Integer, ForeignKey('states.id'), nullable=False)
+if __name__ == "__main__":
+    engine = create_engine(
+        'mysql+mysqldb://{}:{}@localhost/{}'.format(
+            sys.argv[1], sys.argv[2], sys.argv[3]
+        ),
+        pool_pre_ping=True
+    )
+    Base.metadata.create_all(engine)
+    session = Session(engine)
+    rows = session.query(State, City).filter(
+        State.id == City.state_id
+    ).order_by(City.id).all()
+    for state, city in rows:
+        print("{}: ({}) {}".format(state.name, city.id, city.name))
+    session.close()
