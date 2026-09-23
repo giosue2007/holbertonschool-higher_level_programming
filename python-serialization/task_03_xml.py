@@ -23,4 +23,4 @@ def deserialize_from_xml(filename):
     for child in root:
         result_dict[child.tag] = child.text
 
-    return result_
+    return result_dicty
