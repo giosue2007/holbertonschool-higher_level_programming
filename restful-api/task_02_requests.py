@@ -11,16 +11,13 @@ def fetch_and_print_posts():
     Fetches all posts from JSONPlaceholder and prints status code and titles.
     """
     url = "https://jsonplaceholder.typicode.com/posts"
-    try:
-        response = requests.get(url)
-        print("Status Code: {}".format(response.status_code))
+    response = requests.get(url)
+    print("Status Code: {}".format(response.status_code))
 
-        if response.status_code == 200:
-            posts = response.json()
-            for post in posts:
-                print(post.get("title"))
-    except Exception:
-        return
+    if response.status_code == 200:
+        posts = response.json()
+        for post in posts:
+            print(post.get("title"))
 
 
 def fetch_and_save_posts():
@@ -28,24 +25,21 @@ def fetch_and_save_posts():
     Fetches all posts from JSONPlaceholder and saves id, title, body to posts.csv.
     """
     url = "https://jsonplaceholder.typicode.com/posts"
-    try:
-        response = requests.get(url)
+    response = requests.get(url)
 
-        if response.status_code == 200:
-            posts = response.json()
-            data = [
-                {
-                    "id": post.get("id"),
-                    "title": post.get("title"),
-                    "body": post.get("body")
-                }
-                for post in posts
-            ]
+    if response.status_code == 200:
+        posts = response.json()
+        data = [
+            {
+                "id": post.get("id"),
+                "title": post.get("title"),
+                "body": post.get("body")
+            }
+            for post in posts
+        ]
 
-            with open("posts.csv", "w", encoding="utf-8", newline="") as f:
-                fieldnames = ["id", "title", "body"]
-                writer = csv.DictWriter(f, fieldnames=fieldnames)
-                writer.writeheader()
-                writer.writerows(data)
-    except Exception:
-        return
+        with open("posts.csv", "w", encoding="utf-8", newline="") as f:
+            fieldnames = ["id", "title", "body"]
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(data)
