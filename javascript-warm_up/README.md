@@ -1,1 +1,1 @@
-JavaScript - Warm up[text](../restful-api)
+JavaScript - Warm up
